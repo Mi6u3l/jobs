@@ -47,4 +47,37 @@ router.post('/signup', (req, res, next) => {
   });
 });
 
+router.post('/login', (req, res, next) => {
+  let username = req.body.username;
+  let password = req.body.password;
+
+  if (!username || !password) {
+    res.status(401).json({ message: 'Provide username and password' });
+    return;
+  }
+
+  User.findOne({'username': username}, (err, user) => {
+    if (!user) {
+      res.status(401).json({ message: 'The username or password is incorrect' });
+      return;
+    }
+
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (!isMatch) {
+        res.status(401).json({ message: 'The username or password is incorrect' });
+      }
+      else {
+        const payload = {id: user._id, user: user.username};
+        const token = jwt.sign(payload, jwtOptions.secretOrKey);
+
+        res.status(200).json({ token, user });
+      }
+    });
+  });
+});
+
+router.get('/ping', passport.authenticate('jwt', { session: false }), (req, res) => {
+  res.json('Pong');
+});
+
 module.exports = router;
