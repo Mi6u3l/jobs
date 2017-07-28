@@ -19,7 +19,7 @@ const leadSchema = new mongoose.Schema({
   status: String,
   logourl: String,
   contactperson: {
-    name: type: String,
+    name: String,
     email: {
       type: String,
       required: [true, 'Email for contact person required.']
