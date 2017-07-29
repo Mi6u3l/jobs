@@ -51,11 +51,10 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
   let username = req.body.username;
-  let email = req.body.email;
   let password = req.body.password;
 
-  if (!username || !password || !email) {
-    res.status(401).json({ message: 'Provide username, email and password' });
+  if (!username || !password) {
+    res.status(401).json({ message: 'Provide username and password' });
     return;
   }
 
