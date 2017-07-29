@@ -8,8 +8,8 @@ const cors = require('cors');
 
 require('./config/database');
 
-const api = require('./routes/api');
 const auth = require('./routes/auth');
+const api = require('./routes/api');
 
 const app = express();
 
