@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   res.json('api home route works');
 });
 
-router.get('/leads', function(req, res, next) {
+router.get('/leads/:userid', function(req, res, next) {
 
   let allLeads = {
     leadsContacted: [],
@@ -19,7 +19,7 @@ router.get('/leads', function(req, res, next) {
     leadsDone: []
   }
 
-  Lead.find((err, leads) => {
+  Lead.find({ 'owner': req.params.userid }, (err, leads) => {
     if (err) {
       res.json(err);
       return;
@@ -40,7 +40,6 @@ router.get('/leads', function(req, res, next) {
       }
     });
 
-    console.log(allLeads);
     res.json(allLeads);
   });
 });
