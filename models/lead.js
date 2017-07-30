@@ -18,7 +18,8 @@ const leadSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['contacted', 'replyreceived', 'interview', 'done']
+    enum: ['contacted', 'replyreceived', 'interview', 'done'],
+    required: [true, 'Status is required.']
   },
   logourl: String,
   contactperson: {
