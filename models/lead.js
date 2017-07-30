@@ -16,7 +16,10 @@ const leadSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Job title is required.']
   },
-  status: String,
+  status: {
+    type: String,
+    enum: ['contacted', 'replyreceived', 'interview', 'done']
+  },
   logourl: String,
   contactperson: {
     name: String,

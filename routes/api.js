@@ -11,12 +11,37 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/leads', function(req, res, next) {
+
+  let allLeads = {
+    leadsContacted: [],
+    leadsReplyReceived: [],
+    leadsInterview: [],
+    leadsDone: []
+  }
+
   Lead.find((err, leads) => {
     if (err) {
       res.json(err);
       return;
     }
-    res.json(leads);
+
+    leads.forEach((lead) => {
+      if (lead.status === 'contacted') {
+        allLeads.leadsContacted.push(lead);
+      }
+      if (lead.status === 'replyreceived') {
+        allLeads.leadsReplyReceived.push(lead);
+      }
+      if (lead.status === 'interview') {
+        allLeads.leadsInterview.push(lead);
+      }
+      if (lead.status === 'done') {
+        allLeads.leadsDone.push(lead);
+      }
+    });
+
+    console.log(allLeads);
+    res.json(allLeads);
   });
 });
 
