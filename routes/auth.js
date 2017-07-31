@@ -78,8 +78,10 @@ router.post('/login', (req, res, next) => {
   });
 });
 
-router.get('/ping', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json('Pong');
+router.get('/auth', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const user = req.user;
+  
+  res.json({user});
 });
 
 module.exports = router;
