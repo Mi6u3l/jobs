@@ -21,7 +21,10 @@ const leadSchema = new mongoose.Schema({
     enum: ['contacted', 'replyreceived', 'interview', 'done'],
     required: [true, 'Status is required.']
   },
-  logourl: String,
+  logourl: {
+    type: String,
+    default: 'assets/picture-line.svg'
+  },
   contactperson: {
     name: String,
     email: {
