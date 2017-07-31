@@ -44,4 +44,37 @@ router.get('/leads/:userid', function(req, res, next) {
   });
 });
 
+router.post('/lead/new', function(req, res, next) {
+
+  const owner = req.body.owner;
+  const company = req.body.company;
+  const jobtitle = req.body.jobtitle;
+  const status = req.body.status;
+  const logourl = req.body.logourl;
+  const contactpersonName = req.body.contactpersonname;
+  const contactpersonEmail = req.body.contactpersonemail;
+
+  const newLead = new Lead({
+    owner,
+    company,
+    jobtitle,
+    status,
+    logourl,
+    contactperson: {
+      name: contactpersonName,
+      email: contactpersonEmail
+    }
+
+  });
+
+  newLead.save((err, lead) => {
+    if (err) {
+      res.status(400).json({ message: err });
+    };
+
+    res.status(200).json({ lead });
+  });
+
+});
+
 module.exports = router;
