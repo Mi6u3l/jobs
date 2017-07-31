@@ -10,6 +10,7 @@ require('./config/database');
 
 const auth = require('./routes/auth');
 const api = require('./routes/api');
+const ext = require('./routes/externalservices');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', auth);
 app.use('/api', api);
+app.use('/ext', ext);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
