@@ -7,7 +7,7 @@ const axios = require('axios');
 
 // Glassdoor
 
-router.get('/glassdoor', async (req, res, next) => {
+router.get('/glassdoor', (req, res, next) => {
 
   const companyName = req.query.company;
 
