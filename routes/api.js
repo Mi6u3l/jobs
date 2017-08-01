@@ -75,8 +75,8 @@ router.post('/lead/new', function(req, res, next) {
   const jobtitle = req.body.jobtitle;
   const status = req.body.status;
   const logourl = req.body.logourl;
-  const contactpersonName = req.body.contactpersonname;
-  const contactpersonEmail = req.body.contactpersonemail;
+  const contactpersonName = req.body.contactperson.name;
+  const contactpersonEmail = req.body.contactperson.email;
 
   const newLead = new Lead({
     owner,
