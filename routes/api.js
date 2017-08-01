@@ -44,6 +44,30 @@ router.get('/leads/:userid', (req, res, next) => {
   });
 });
 
+router.put('/lead/:id', (req, res, next) => {
+
+  const leadUpdates = {
+    company: req.body.company,
+    jobtitle: req.body.jobtitle,
+    status: req.body.status,
+    logourl: req.body.logourl,
+    contactperson: {
+      name: req.body.contactperson.name,
+      email: req.body.contactperson.email
+    }
+  }
+
+  Lead.findByIdAndUpdate(req.params.id, leadUpdates, (err) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+
+    res.json({ message: 'Lead updated!' });
+  });
+
+});
+
 router.post('/lead/new', function(req, res, next) {
 
   const owner = req.body.owner;
