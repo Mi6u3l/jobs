@@ -4,13 +4,13 @@ const mongoose = require('mongoose');
 
 const Lead = require('../models/lead');
 
-/* Internal API routes */
+// Internal API routes
 
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   res.json('api home route works');
 });
 
-router.get('/leads/:userid', function(req, res, next) {
+router.get('/leads/:userid', (req, res, next) => {
 
   let allLeads = {
     leadsContacted: [],
