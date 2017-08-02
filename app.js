@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config({'path': '.env'});
+
 
 require('./config/database');
 
@@ -13,6 +15,21 @@ const api = require('./routes/api');
 const ext = require('./routes/externalservices');
 
 const app = express();
+
+const forceSSL = function() {
+  return function (req, res, next) {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(
+       ['https://', req.get('Host'), req.url].join('')
+      );
+    }
+    next();
+  }
+}
+
+if (process.env.NODE_ENV !== 'development') {
+  app.use(forceSSL());
+}
 
 app.use(cors());
 
