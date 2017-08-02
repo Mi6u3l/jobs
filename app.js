@@ -31,7 +31,7 @@ app.use('/api', api);
 app.use('/ext', ext);
 
 app.use(function(req, res) {
-  res.sendfile(__dirname + '/public/index.html');
+  res.sendfile(__dirname + '/public/dist/index.html');
 });
 
 // catch 404 and forward to error handler
