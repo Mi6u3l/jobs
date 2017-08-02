@@ -44,6 +44,21 @@ router.get('/leads/:userid', (req, res, next) => {
   });
 });
 
+router.get('/lead/:id', (req, res, next) => {
+
+  const leadId = req.params.id;
+
+  Lead.findById({ _id: leadId }, (err, lead) => {
+    if (err) {
+      res.json(err);
+      return;
+    };
+
+    res.json(lead);
+  });
+
+});
+
 router.put('/lead/:id', (req, res, next) => {
 
   const leadUpdates = {
@@ -65,6 +80,19 @@ router.put('/lead/:id', (req, res, next) => {
 
     res.json({ message: 'Lead updated!' });
   });
+
+});
+
+router.delete('/lead/:id', (req, res, next) => {
+
+  Lead.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+
+    res.json({ message: 'Lead deleted!' });
+  })
 
 });
 

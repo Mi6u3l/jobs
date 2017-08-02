@@ -11,7 +11,6 @@ require('./config/database');
 const auth = require('./routes/auth');
 const api = require('./routes/api');
 const ext = require('./routes/externalservices');
-const ui = require('./routes/ui-routes');
 
 const app = express();
 
@@ -27,7 +26,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', ui);
 app.use('/auth', auth);
 app.use('/api', api);
 app.use('/ext', ext);
