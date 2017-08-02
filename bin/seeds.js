@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 require('dotenv').config({'path': '.env'});
 mongoose.connect(`${process.env.MONGODB_URI}`);
 
-const User = require('../models/User');
-const Lead = require('../models/Lead');
+const User = require('../models/user');
+const Lead = require('../models/lead');
 
 const bcrypt = require('bcrypt');
 const bcryptSalt = 10;
