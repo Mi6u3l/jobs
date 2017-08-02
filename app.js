@@ -16,21 +16,6 @@ const ext = require('./routes/externalservices');
 
 const app = express();
 
-const forceSSL = function() {
-  return function (req, res, next) {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-      return res.redirect(
-       ['https://', req.get('Host'), req.url].join('')
-      );
-    }
-    next();
-  }
-}
-
-if (process.env.NODE_ENV !== 'development') {
-  app.use(forceSSL());
-}
-
 app.use(cors());
 
 // view engine setup
