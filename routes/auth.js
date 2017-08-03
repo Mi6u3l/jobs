@@ -80,7 +80,7 @@ router.post('/login', (req, res, next) => {
 
 router.get('/auth', passport.authenticate('jwt', { session: false }), (req, res) => {
   const user = req.user;
-  
+
   res.json({user});
 });
 
