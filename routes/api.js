@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Lead = require('../models/lead');
+const Timeline = require('../models/timeline');
 
 // Internal API routes
 
@@ -112,7 +113,7 @@ router.delete('/lead/:id', (req, res, next) => {
 
 });
 
-router.post('/lead/new', function(req, res, next) {
+router.post('/lead/new', (req, res, next) => {
 
   const owner = req.body.owner;
   const company = req.body.company;
@@ -145,6 +146,57 @@ router.post('/lead/new', function(req, res, next) {
     res.status(200).json({ lead });
   });
 
+});
+
+router.post('/timeline/new', (req, res, next) => {
+
+    const owner = req.body.owner;
+    const lead = req.body.lead;
+    const content = req.body.content;
+
+    const newTimelineEntry = new Timeline({
+      owner,
+      lead,
+      content
+    });
+
+    newTimelineEntry.save((err, timelineEntry) => {
+      if (err) {
+        res.status(400).json({ message: err });
+      }
+
+      res.status(200).json({ timelineEntry });
+    });
+});
+
+router.put('/timeline/:id', (req, res, next) => {
+
+  const timelineEntryUpdates = {
+    owner: req.body.owner,
+    lead: req.body.lead,
+    content: req.body.content
+  }
+
+  Timeline.findByIdAndUpdate(req.params.id, timelineEntryUpdates, (err) => {
+    if (err) {
+      res.status(400).json({ message: err });
+      return;
+    }
+
+    res.status(200).json({ message: 'Timeline entry updated!' });
+  });
+});
+
+router.delete('/timeline/:id', (req, res, next) => {
+
+  Timeline.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      res.status(400).json({ message: err });
+      return;
+    }
+
+    res.status(200).json({ message: 'Timeline entry deleted!' });
+  })
 });
 
 module.exports = router;
