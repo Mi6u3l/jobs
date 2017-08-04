@@ -152,7 +152,10 @@ router.get('/timeline/:leadid', async (req, res, next) => {
 
   const timelineLeadId = req.params.leadid;
 
-  const entries = await Timeline.find({}).where('lead').equals(timelineLeadId);
+  const entries = await Timeline.find({})
+    .where('lead')
+    .equals(timelineLeadId)
+    .sort({'created_at': -1});
 
   res.json(entries);
 
