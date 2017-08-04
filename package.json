@@ -2,6 +2,9 @@
   "name": "jobs-back",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "7.10.1"
+  },
   "scripts": {
     "start": "npm run seed && node ./bin/www",
     "dev": "nodemon ./bin/www",
