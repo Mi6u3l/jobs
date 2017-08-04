@@ -148,6 +148,16 @@ router.post('/lead/new', (req, res, next) => {
 
 });
 
+router.get('/timeline/:leadid', async (req, res, next) => {
+
+  const timelineLeadId = req.params.leadid;
+
+  const entries = await Timeline.find({}).where('lead').equals(timelineLeadId);
+
+  res.json(entries);
+
+});
+
 router.post('/timeline/new', (req, res, next) => {
 
     const owner = req.body.owner;
