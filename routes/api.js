@@ -40,6 +40,21 @@ router.get('/leads/:userid', (req, res, next) => {
       }
     });
 
+    // Sort according to colIndex for dashboard view order
+
+    allLeads.leadsContacted.sort((a, b) => {
+      return parseFloat(a.colIndex) - parseFloat(b.colIndex);
+    });
+    allLeads.leadsReplyReceived.sort((a, b) => {
+      return parseFloat(a.colIndex) - parseFloat(b.colIndex);
+    });
+    allLeads.leadsInterview.sort((a, b) => {
+      return parseFloat(a.colIndex) - parseFloat(b.colIndex);
+    });
+    allLeads.leadsDone.sort((a, b) => {
+      return parseFloat(a.colIndex) - parseFloat(b.colIndex);
+    });
+
     res.json(allLeads);
   });
 });
@@ -65,6 +80,7 @@ router.put('/lead/:id', (req, res, next) => {
     company: req.body.company,
     jobtitle: req.body.jobtitle,
     status: req.body.status,
+    colIndex: req.body.colIndex,
     logourl: req.body.logourl,
     contactperson: {
       name: req.body.contactperson.name,
@@ -102,6 +118,7 @@ router.post('/lead/new', function(req, res, next) {
   const company = req.body.company;
   const jobtitle = req.body.jobtitle;
   const status = req.body.status;
+  const colIndex = req.body.colIndex;
   const logourl = req.body.logourl;
   const contactpersonName = req.body.contactperson.name;
   const contactpersonEmail = req.body.contactperson.email;
@@ -111,6 +128,7 @@ router.post('/lead/new', function(req, res, next) {
     company,
     jobtitle,
     status,
+    colIndex,
     logourl,
     contactperson: {
       name: contactpersonName,
