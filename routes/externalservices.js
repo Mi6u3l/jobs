@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 require('dotenv').config({'path': '.env'});
 const axios = require('axios');
+const Timeline = require('../models/timeline');
 
 // External API routes
 
@@ -20,6 +21,28 @@ router.get('/glassdoor', (req, res, next) => {
     .catch((error) => {
       res.json(error);
     });
+
+});
+
+// Cloudmailin
+
+router.post('/mail', async (req, res, next) => {
+
+  const lead = req.body.headers.Subject;
+  const content = req.body.reply_plain;
+
+  const newTimelineEntry = new Timeline({
+    lead,
+    content
+  });
+
+  newTimelineEntry.save((err, timelineEntry) => {
+    if (err) {
+      res.status(400).json({ message: err });
+    }
+
+    res.status(200).json('mail ok!');
+  });
 
 });
 

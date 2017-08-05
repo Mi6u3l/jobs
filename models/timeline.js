@@ -6,8 +6,7 @@ const Schema = mongoose.Schema;
 const timelineSchema = new mongoose.Schema({
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, 'Timeline entry owner id is required.']
+    ref: 'User'
   },
   lead: {
     type: Schema.Types.ObjectId,
