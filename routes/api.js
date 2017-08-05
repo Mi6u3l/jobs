@@ -89,9 +89,6 @@ router.put('/lead/:id', (req, res, next) => {
     }
   }
 
-  console.log(leadUpdates);
-  console.log(req.params.id);
-
   Lead.findByIdAndUpdate(req.params.id, leadUpdates, (err) => {
     if (err) {
       res.json(err);
