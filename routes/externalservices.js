@@ -31,7 +31,7 @@ router.post('/mail', async (req, res, next) => {
   console.log(req.body);
 
   const lead = req.body.headers.Subject;
-  const content = req.body.reply_plain;
+  const content = req.body.plain;
 
   const newTimelineEntry = new Timeline({
     lead,
