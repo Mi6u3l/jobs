@@ -32,10 +32,12 @@ router.post('/mail', async (req, res, next) => {
 
   const lead = req.body.headers.Subject;
   const content = req.body.plain;
+  const creator = 'email'
 
   const newTimelineEntry = new Timeline({
     lead,
-    content
+    content,
+    creator
   });
 
   newTimelineEntry.save((err, timelineEntry) => {

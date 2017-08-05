@@ -13,7 +13,11 @@ const timelineSchema = new mongoose.Schema({
     ref: 'Lead',
     required: [true, 'Timeline entry lead id is required.']
   },
-  content: String
+  content: String,
+  creator: {
+    type: String,
+    enum: ['manual', 'email', 'app']
+  }
 },
 {
   timestamps: {

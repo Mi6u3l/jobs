@@ -166,11 +166,13 @@ router.post('/timeline/new', (req, res, next) => {
     const owner = req.body.owner;
     const lead = req.body.lead;
     const content = req.body.content;
+    const creator = req.body.creator;
 
     const newTimelineEntry = new Timeline({
       owner,
       lead,
-      content
+      content,
+      creator
     });
 
     newTimelineEntry.save((err, timelineEntry) => {
@@ -187,7 +189,8 @@ router.put('/timeline/:id', (req, res, next) => {
   const timelineEntryUpdates = {
     owner: req.body.owner,
     lead: req.body.lead,
-    content: req.body.content
+    content: req.body.content,
+    creator: req.body.creator
   }
 
   Timeline.findByIdAndUpdate(req.params.id, timelineEntryUpdates, (err) => {
@@ -202,13 +205,13 @@ router.put('/timeline/:id', (req, res, next) => {
 
 router.delete('/timeline/:id', (req, res, next) => {
 
-  Timeline.findByIdAndRemove(req.params.id, (err) => {
+  Timeline.findByIdAndRemove(req.params.id, (err, doc) => {
     if (err) {
       res.status(400).json({ message: err });
       return;
     }
 
-    res.status(200).json({ message: 'Timeline entry deleted!' });
+    res.status(200).json({ message: 'Timeline entry deleted!', doc });
   })
 });
 
