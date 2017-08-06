@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config({'path': '.env'});
 
-
 require('./config/database');
 
 const auth = require('./routes/auth');
@@ -16,13 +15,18 @@ const ext = require('./routes/externalservices');
 
 const app = express();
 
-app.use(cors());
+corsOpts = {
+  origin: true,
+  credentials: true
+}
+
+app.use(cors(corsOpts));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

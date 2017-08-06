@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const multer = require('multer');
+const upload = multer({ 'dest': './public/uploads' });
 
 const Lead = require('../models/lead');
 const Timeline = require('../models/timeline');
@@ -213,6 +215,14 @@ router.delete('/timeline/:id', (req, res, next) => {
 
     res.status(200).json({ message: 'Timeline entry deleted!', doc });
   })
+});
+
+router.post('/timeline/fileupload', upload.single('file'), (req, res, next) => {
+
+  console.log(req.file);
+
+  res.send('File upload ok!');
+
 });
 
 module.exports = router;
