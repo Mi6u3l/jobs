@@ -4,9 +4,15 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const upload = multer({ 'dest': './public/uploads' });
 const passport = require('passport');
+const aws = require('aws-sdk');
+require('dotenv').config({'path': '.env'});
+const s3_bucket = process.env.S3_BUCKET_NAME;
 
 const Lead = require('../models/lead');
 const Timeline = require('../models/timeline');
+
+// aws config
+aws.config.region = 'eu-central-1';
 
 // Internal API routes
 
@@ -66,8 +72,6 @@ router.get('/leads/:userid', passport.authenticate('jwt', { session: false }), (
 router.get('/lead/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   const leadId = req.params.id;
-
-  console.log(req.headers);
 
   Lead.findById({ _id: leadId }, (err, lead) => {
     if (err) {
@@ -172,12 +176,14 @@ router.post('/timeline/new', passport.authenticate('jwt', { session: false }), (
     const lead = req.body.lead;
     const content = req.body.content;
     const creator = req.body.creator;
+    const fileurl = req.body.fileurl
 
     const newTimelineEntry = new Timeline({
       owner,
       lead,
       content,
-      creator
+      creator,
+      fileurl
     });
 
     newTimelineEntry.save((err, timelineEntry) => {
@@ -220,18 +226,29 @@ router.delete('/timeline/:id', passport.authenticate('jwt', { session: false }),
   })
 });
 
-router.post('/timeline/fileupload', upload.single('file'), (req, res, next) => {
+router.get('/sign-s3', passport.authenticate('jwt', { session: false }),  (req, res) => {
+  const s3 = new aws.S3();
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
+  const s3Params = {
+    Bucket: s3_bucket,
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
 
-  const newTimelineEntryFile = {
-
-  }
-
-  console.log(newTimelineEntryFile);
-
-  // Owner and lead id should come from somewhere
-
-  res.sendStatus(200).json({ message: 'File upload successful!' });
-
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://${s3_bucket}.s3.amazonaws.com/${fileName}`
+    };
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
 });
 
 module.exports = router;

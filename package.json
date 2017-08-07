@@ -11,6 +11,7 @@
     "seed": "node ./bin/seeds.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.94.0",
     "axios": "^0.16.2",
     "bcrypt": "^1.0.2",
     "body-parser": "~1.17.1",
