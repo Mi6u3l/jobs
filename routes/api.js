@@ -29,7 +29,7 @@ router.get('/leads/:userid', passport.authenticate('jwt', { session: false }), (
     leadsDone: []
   }
 
-  Lead.find({ 'owner': req.params.userid }, (err, leads) => {
+  Lead.find({ 'owner': req.user._id }, (err, leads) => {
     if (err) {
       res.json(err);
       return;
@@ -124,7 +124,7 @@ router.delete('/lead/:id', passport.authenticate('jwt', { session: false }), (re
 
 router.post('/lead/new', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
-  const owner = req.body.owner;
+  const owner = req.user._id;
   const company = req.body.company;
   const jobtitle = req.body.jobtitle;
   const status = req.body.status;
@@ -172,18 +172,20 @@ router.get('/timeline/:leadid', passport.authenticate('jwt', { session: false })
 
 router.post('/timeline/new', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
-    const owner = req.body.owner;
+    const owner = req.user._id;
     const lead = req.body.lead;
     const content = req.body.content;
     const creator = req.body.creator;
-    const fileurl = req.body.fileurl
+    const fileurl = req.body.fileurl;
+    const filename = req.body.filename;
 
     const newTimelineEntry = new Timeline({
       owner,
       lead,
       content,
       creator,
-      fileurl
+      fileurl,
+      filename
     });
 
     newTimelineEntry.save((err, timelineEntry) => {
@@ -198,10 +200,12 @@ router.post('/timeline/new', passport.authenticate('jwt', { session: false }), (
 router.put('/timeline/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   const timelineEntryUpdates = {
-    owner: req.body.owner,
+    owner: req.user._id,
     lead: req.body.lead,
     content: req.body.content,
-    creator: req.body.creator
+    creator: req.body.creator,
+    fileurl: req.body.fileurl,
+    filename: req.body.filename
   }
 
   Timeline.findByIdAndUpdate(req.params.id, timelineEntryUpdates, (err) => {
