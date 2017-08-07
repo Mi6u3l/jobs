@@ -17,7 +17,8 @@ const timelineSchema = new mongoose.Schema({
   creator: {
     type: String,
     enum: ['manual', 'email', 'app']
-  }
+  },
+  filepath: String
 },
 {
   timestamps: {

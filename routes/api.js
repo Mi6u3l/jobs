@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
 const upload = multer({ 'dest': './public/uploads' });
+const passport = require('passport');
 
 const Lead = require('../models/lead');
 const Timeline = require('../models/timeline');
@@ -13,7 +14,7 @@ router.get('/', (req, res, next) => {
   res.json('api home route works');
 });
 
-router.get('/leads/:userid', (req, res, next) => {
+router.get('/leads/:userid', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   let allLeads = {
     leadsContacted: [],
@@ -62,9 +63,11 @@ router.get('/leads/:userid', (req, res, next) => {
   });
 });
 
-router.get('/lead/:id', (req, res, next) => {
+router.get('/lead/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   const leadId = req.params.id;
+
+  console.log(req.headers);
 
   Lead.findById({ _id: leadId }, (err, lead) => {
     if (err) {
@@ -77,7 +80,7 @@ router.get('/lead/:id', (req, res, next) => {
 
 });
 
-router.put('/lead/:id', (req, res, next) => {
+router.put('/lead/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   const leadUpdates = {
     company: req.body.company,
@@ -102,7 +105,7 @@ router.put('/lead/:id', (req, res, next) => {
 
 });
 
-router.delete('/lead/:id', (req, res, next) => {
+router.delete('/lead/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   Lead.findByIdAndRemove(req.params.id, (err) => {
     if (err) {
@@ -115,7 +118,7 @@ router.delete('/lead/:id', (req, res, next) => {
 
 });
 
-router.post('/lead/new', (req, res, next) => {
+router.post('/lead/new', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   const owner = req.body.owner;
   const company = req.body.company;
@@ -150,7 +153,7 @@ router.post('/lead/new', (req, res, next) => {
 
 });
 
-router.get('/timeline/:leadid', async (req, res, next) => {
+router.get('/timeline/:leadid', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
   const timelineLeadId = req.params.leadid;
 
@@ -163,7 +166,7 @@ router.get('/timeline/:leadid', async (req, res, next) => {
 
 });
 
-router.post('/timeline/new', (req, res, next) => {
+router.post('/timeline/new', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
     const owner = req.body.owner;
     const lead = req.body.lead;
@@ -186,7 +189,7 @@ router.post('/timeline/new', (req, res, next) => {
     });
 });
 
-router.put('/timeline/:id', (req, res, next) => {
+router.put('/timeline/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   const timelineEntryUpdates = {
     owner: req.body.owner,
@@ -205,7 +208,7 @@ router.put('/timeline/:id', (req, res, next) => {
   });
 });
 
-router.delete('/timeline/:id', (req, res, next) => {
+router.delete('/timeline/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   Timeline.findByIdAndRemove(req.params.id, (err, doc) => {
     if (err) {
@@ -219,9 +222,15 @@ router.delete('/timeline/:id', (req, res, next) => {
 
 router.post('/timeline/fileupload', upload.single('file'), (req, res, next) => {
 
-  console.log(req.file);
+  const newTimelineEntryFile = {
 
-  res.send('File upload ok!');
+  }
+
+  console.log(newTimelineEntryFile);
+
+  // Owner and lead id should come from somewhere
+
+  res.sendStatus(200).json({ message: 'File upload successful!' });
 
 });
 
