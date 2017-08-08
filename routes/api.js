@@ -50,21 +50,6 @@ router.get('/leads/:userid', passport.authenticate('jwt', { session: false }), (
       }
     });
 
-    // Sort according to colIndex for dashboard view order
-
-    allLeads.leadsContacted.sort((a, b) => {
-      return parseFloat(a.colIndex) - parseFloat(b.colIndex);
-    });
-    allLeads.leadsReplyReceived.sort((a, b) => {
-      return parseFloat(a.colIndex) - parseFloat(b.colIndex);
-    });
-    allLeads.leadsInterview.sort((a, b) => {
-      return parseFloat(a.colIndex) - parseFloat(b.colIndex);
-    });
-    allLeads.leadsDone.sort((a, b) => {
-      return parseFloat(a.colIndex) - parseFloat(b.colIndex);
-    });
-
     res.json(allLeads);
   });
 });
