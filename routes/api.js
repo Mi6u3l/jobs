@@ -94,6 +94,21 @@ router.put('/lead/:id', passport.authenticate('jwt', { session: false }), (req, 
 
 });
 
+router.put('/lead/updatedat/:id', (req, res, next) => {
+
+  const now = new Date();
+
+  Lead.findByIdAndUpdate(req.params.id, { 'updated_at': now }, (err) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+
+  res.json({ message: 'Lead updated!' });
+
+  });
+});
+
 router.delete('/lead/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   Lead.findByIdAndRemove(req.params.id, (err) => {
@@ -147,41 +162,9 @@ router.get('/alarms', passport.authenticate('jwt', { session: false }), async (r
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - 1);
 
-  // Lead alarms:
-
   const leadAlarms = await Lead.find({}).where('owner').equals(req.user._id).where('updated_at').lt(cutoff);
 
-  // Timeline alarms:
-
-  // First all lead ids from user
-  const userLeadIds = await Lead.find({}).where('owner').equals(req.user._id).select('_id');
-
-  // Then find timeline entries with previous lead ids
-  const allUserLeadTimelineEntries = await Timeline.find({ 'lead': { $in: userLeadIds } }).sort( { 'updated_at': -1 } );
-
-  // Then get newest timeline entry for each lead id
-  const leadIds = [];
-  const newestEntries = [];
-  allUserLeadTimelineEntries.forEach(item => {
-    if (!leadIds.includes(item.lead.toString())) {
-      leadIds.push(item.lead.toString());
-      newestEntries.push(item._id);
-    }
-  });
-
-  // Finally get entries that are worth an alarm and clean away entries that already have a lead alarm
-  const leadAlarmIds = leadAlarms.map( item => item._id );
-
-  const entryAlarms = await Timeline.find(
-    {
-      '_id': { $in: newestEntries },
-      'lead': { $nin: leadAlarmIds }
-    })
-    .where('updated_at').lt(cutoff);
-
-  const allAlarms = [...leadAlarms, ...entryAlarms];
-
-  res.json(allAlarms);
+  res.json(leadAlarms);
 
 });
 
