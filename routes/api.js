@@ -160,7 +160,7 @@ router.post('/lead/new', passport.authenticate('jwt', { session: false }), (req,
 router.get('/alarms', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
 
   const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 0.5); // two weeks
+  cutoff.setDate(cutoff.getDate() - 14); // two weeks
 
   const leadAlarms = await Lead.find({}).where('owner').equals(req.user._id).where('updated_at').lt(cutoff);
 
