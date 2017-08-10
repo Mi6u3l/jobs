@@ -131,13 +131,13 @@ function createLeads() {
       owner: [`${seeduserId}`],
       company: 'Tesla',
       jobtitle: 'Crash test dummy',
-      status: 'contacted',
+      status: 'interview',
       logourl: 'https://media.glassdoor.com/sqll/43129/tesla-motors-squarelogo.png',
       contactperson: {
         name: 'Elon Musk',
         email: 'elon@tesla.com'
       },
-      isFavorite: false
+      isFavorite: true
     },
     {
       owner: [`${seeduserId}`],
