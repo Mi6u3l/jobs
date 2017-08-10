@@ -35,7 +35,8 @@ const leadSchema = new mongoose.Schema({
       type: String,
       required: [true, 'Email for contact person required.']
     }
-  }
+  },
+  isFavorite: Boolean
 },
 {
   timestamps: {

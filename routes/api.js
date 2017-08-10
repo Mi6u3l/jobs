@@ -69,6 +69,22 @@ router.get('/lead/:id', passport.authenticate('jwt', { session: false }), (req, 
 
 });
 
+router.put('/lead/favorite/:id', async (req, res, next) => {
+
+  const lead = await Lead.findOne({ '_id': req.params.id }).select('isFavorite');
+
+  Lead.findByIdAndUpdate(req.params.id, { 'isFavorite': !lead.isFavorite }, (err) => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+
+    res.json({ message: 'Lead favorite toggled!' });
+
+  });
+
+});
+
 router.put('/lead/:id', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   const leadUpdates = {
