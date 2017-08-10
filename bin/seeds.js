@@ -52,7 +52,8 @@ function createLeads() {
       contactperson: {
         name: 'Sergey Brin',
         email: 'sergey@google.com'
-      }
+      },
+      isFavorite: false
     },
     {
       owner: [`${seeduserId}`],
@@ -63,7 +64,8 @@ function createLeads() {
       contactperson: {
         name: 'Mark Zuckerberg',
         email: 'mark@facebook.com'
-      }
+      },
+      isFavorite: false
     },
     {
       owner: [`${seeduserId}`],
@@ -74,7 +76,8 @@ function createLeads() {
       contactperson: {
         name: 'Bill Gates',
         email: 'billgates@microsoft.com'
-      }
+      },
+      isFavorite: false
     },
     {
       owner: [`${seeduserId}`],
@@ -85,7 +88,8 @@ function createLeads() {
       contactperson: {
         name: 'Marc Collado',
         email: 'marc@ironhack.com'
-      }
+      },
+      isFavorite: false
     },
     {
       owner: [`${seeduserId}`],
@@ -96,7 +100,8 @@ function createLeads() {
       contactperson: {
         name: 'John Instergram',
         email: 'john@instagram.com'
-      }
+      },
+      isFavorite: false
     },
     {
       owner: [`${seeduserId}`],
@@ -107,7 +112,8 @@ function createLeads() {
       contactperson: {
         name: 'Jenny Glovonder',
         email: 'jenny.glovonder@glovo.com'
-      }
+      },
+      isFavorite: false
     },
     {
       owner: [`${seeduserId}`],
@@ -118,7 +124,8 @@ function createLeads() {
       contactperson: {
         name: 'Laura Xing',
         email: 'laura@xing.com'
-      }
+      },
+      isFavorite: false
     },
     {
       owner: [`${seeduserId}`],
@@ -129,7 +136,8 @@ function createLeads() {
       contactperson: {
         name: 'Elon Musk',
         email: 'elon@tesla.com'
-      }
+      },
+      isFavorite: false
     },
     {
       owner: [`${seeduserId}`],
@@ -140,7 +148,8 @@ function createLeads() {
       contactperson: {
         name: 'Neil Armstrong III',
         email: 'neil@nasa.gov'
-      }
+      },
+      isFavorite: false
     },
     {
       owner: [`${seeduserId}`],
@@ -151,7 +160,8 @@ function createLeads() {
       contactperson: {
         name: 'Guy from Twitter',
         email: 'tweetme@twitter.com'
-      }
+      },
+      isFavorite: false
     }
   ]
 
