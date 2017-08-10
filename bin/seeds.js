@@ -119,6 +119,39 @@ function createLeads() {
         name: 'Laura Xing',
         email: 'laura@xing.com'
       }
+    },
+    {
+      owner: [`${seeduserId}`],
+      company: 'Tesla',
+      jobtitle: 'Crash test dummy',
+      status: 'contacted',
+      logourl: 'https://media.glassdoor.com/sqll/43129/tesla-motors-squarelogo.png',
+      contactperson: {
+        name: 'Elon Musk',
+        email: 'elon@tesla.com'
+      }
+    },
+    {
+      owner: [`${seeduserId}`],
+      company: 'NASA',
+      jobtitle: 'Astronaut',
+      status: 'interview',
+      logourl: 'https://media.glassdoor.com/sqll/7304/nasa-squarelogo.png',
+      contactperson: {
+        name: 'Neil Armstrong III',
+        email: 'neil@nasa.gov'
+      }
+    },
+    {
+      owner: [`${seeduserId}`],
+      company: 'Twitter',
+      jobtitle: 'Twitter Bird',
+      status: 'replyreceived',
+      logourl: 'https://media.glassdoor.com/sqll/100569/twitter-squarelogo-1502093939446.png',
+      contactperson: {
+        name: 'Guy from Twitter',
+        email: 'tweetme@twitter.com'
+      }
     }
   ]
 
