@@ -6,7 +6,7 @@
     "node": "7.10.1"
   },
   "scripts": {
-    "start": "npm run seed && node ./bin/www",
+    "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "seed": "node ./bin/seeds.js"
   },
