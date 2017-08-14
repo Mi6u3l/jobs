@@ -148,6 +148,7 @@ router.post('/lead/new', passport.authenticate('jwt', { session: false }), (req,
   const logourl = req.body.logourl;
   const contactpersonName = req.body.contactperson.name;
   const contactpersonEmail = req.body.contactperson.email;
+  const isFavorite = req.body.isFavorite;
 
   const newLead = new Lead({
     owner,
@@ -159,7 +160,8 @@ router.post('/lead/new', passport.authenticate('jwt', { session: false }), (req,
     contactperson: {
       name: contactpersonName,
       email: contactpersonEmail
-    }
+    },
+    isFavorite
 
   });
 
