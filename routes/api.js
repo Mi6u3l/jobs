@@ -69,9 +69,9 @@ router.get('/lead/:id', passport.authenticate('jwt', { session: false }), (req, 
 
 });
 
-router.put('/lead/favorite/:id', async (req, res, next) => {
+router.put('/lead/favorite/:id',  (req, res, next) => {
 
-  const lead = await Lead.findOne({ '_id': req.params.id }).select('isFavorite');
+  const lead = Lead.findOne({ '_id': req.params.id }).select('isFavorite');
 
   Lead.findByIdAndUpdate(req.params.id, { 'isFavorite': !lead.isFavorite }, (err) => {
     if (err) {
@@ -175,22 +175,22 @@ router.post('/lead/new', passport.authenticate('jwt', { session: false }), (req,
 
 });
 
-router.get('/alarms', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.get('/alarms', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - 14); // two weeks
 
-  const leadAlarms = await Lead.find({}).where('owner').equals(req.user._id).where('updated_at').lt(cutoff);
+  const leadAlarms =  Lead.find({}).where('owner').equals(req.user._id).where('updated_at').lt(cutoff);
 
   res.json(leadAlarms);
 
 });
 
-router.get('/timeline/:leadid', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.get('/timeline/:leadid', passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
   const timelineLeadId = req.params.leadid;
 
-  const entries = await Timeline.find({})
+  const entries = Timeline.find({})
     .where('lead')
     .equals(timelineLeadId)
     .sort({'created_at': -1});

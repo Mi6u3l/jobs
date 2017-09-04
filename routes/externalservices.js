@@ -26,7 +26,7 @@ router.get('/glassdoor', (req, res, next) => {
 
 // Cloudmailin
 
-router.post('/mail', async (req, res, next) => {
+router.post('/mail', (req, res, next) => {
 
   const lead = req.body.headers.Subject;
   const content = req.body.plain;
